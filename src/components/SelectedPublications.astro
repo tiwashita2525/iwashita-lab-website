@@ -1,5 +1,5 @@
 ---
-import {getPublicationTitle, publications} from '../data/publications.js';
+import {getPublicationTitle, getPublicationVenue, publications} from '../data/publications.js';
 import {selectedPublicationGroups} from '../data/selectedPublications.js';
 
 const {lang = 'ja'} = Astro.props;
@@ -25,7 +25,7 @@ const groups = selectedPublicationGroups.map(group => ({
     return {
       id,
       title: getPublicationTitle(publication, lang),
-      venue: getText(publication, 'venue') || getText(publication, 'journal') || getText(publication, 'booktitle'),
+      venue: getPublicationVenue(publication, lang),
       year: publication.year,
       doi: getText(publication, 'doi'),
       showJapaneseNote: lang === 'en' && publication.language === 'ja',

@@ -7,7 +7,7 @@ export const researchImageGroups = [
         src: 'images/research/liquids/liquid_particle_structure.png',
         width: 496,
         height: 424,
-        caption: {ja: '液体の粒子構造', en: 'Particle structure in a liquid'},
+        caption: {ja: '液体金属の構造', en: 'Structure of a liquid metal'},
       },
       {
         src: 'images/research/liquids/ionic_liquid_structure.png',
@@ -55,7 +55,7 @@ export const researchImageGroups = [
         src: 'images/research/glasses/glass_schematic_structure.png',
         width: 456,
         height: 474,
-        caption: {ja: '模式図', en: 'Schematic structure'},
+        caption: {ja: 'STZ core', en: 'STZ core'},
       },
     ],
   },
@@ -71,8 +71,8 @@ export const researchImageGroups = [
       },
       {
         src: 'images/research/colloids/colloid_scattering_curves.png',
-        width: 942,
-        height: 566,
+        width: 306,
+        height: 282,
         caption: {ja: '散乱データの比較', en: 'Comparison of scattering data'},
       },
       {

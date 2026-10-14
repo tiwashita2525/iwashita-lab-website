@@ -1,11 +1,15 @@
 export const contactDirectory = {
   laboratoryName: {
-    ja: '岩下研究室',
-    en: 'Iwashita Laboratory',
+    ja: 'TI Lab（動的な構造不規則系の研究室）',
+    en: 'TI Lab — Laboratory of Dynamic Aperiodic Matter',
   },
   affiliation: {
-    ja: '大分大学 理工学部 理工学科',
-    en: 'Department of Science and Engineering, Faculty of Science and Technology, Oita University',
+    ja: ['大分大学 理工学部 理工学科'],
+    en: [
+      'Department of Science and Technology',
+      'Faculty of Science and Technology',
+      'Oita University',
+    ],
   },
   location: {
     ja: '〒870-1123 大分県大分市旦野原700番地',
@@ -36,13 +40,15 @@ export const contactDirectory = {
 
 export const contactPageCopy = {
   ja: {
-    lead: '岩下研究室の所属情報と、研究室代表者の研究者プロフィールをご案内します。',
+    lead: 'TI Labの所属情報と、研究室代表者の研究者プロフィールをご案内します。',
     overview: 'Laboratory Information',
     laboratoryName: '研究室名',
     affiliation: '所属',
     location: '所在地',
     email: 'メールアドレス',
     representative: '研究室代表',
+    graduateOpportunities: '大学院生募集',
+    graduateOpportunitiesBody: 'TI Labでは、大学院生を随時募集しています。液体・ガラス・コロイド分散系の構造やダイナミクスに興味のある方は、お気軽にお問い合わせください。',
     profiles: 'Researcher Profiles',
     profilesLead: '研究業績や研究者情報は、以下の外部プロフィールから確認できます。',
     externalLink: '外部サイトを開く',
@@ -55,6 +61,8 @@ export const contactPageCopy = {
     location: 'Location',
     email: 'Email',
     representative: 'Representative',
+    graduateOpportunities: 'Graduate Student Opportunities',
+    graduateOpportunitiesBody: 'TI Lab welcomes inquiries from prospective graduate students interested in the structure and dynamics of liquids, glasses, and colloidal dispersions. Please feel free to contact us.',
     profiles: 'Researcher Profiles',
     profilesLead: 'Research activities and researcher information are available through the external profiles below.',
     externalLink: 'Open external profile',

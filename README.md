@@ -1,4 +1,4 @@
-# Iwashita Laboratory — Bilingual Astro Starter
+# TI Lab — Bilingual Astro Website
 
 ## Quick start
 
@@ -7,17 +7,23 @@ npm install
 npm run dev
 ```
 
-Open the URL shown in Terminal (usually http://localhost:4321/iwashita-lab/). The main language URLs are `/iwashita-lab/ja/` and `/iwashita-lab/en/`.
+Open the URL shown in Terminal (usually http://localhost:4321/iwashita-lab-website/). The main language URLs are `/iwashita-lab-website/ja/` and `/iwashita-lab-website/en/`.
+
+The production site is configured for:
+
+- Repository: `tiwashita2525/iwashita-lab-website`
+- URL: `https://tiwashita2525.github.io/iwashita-lab-website/`
 
 ## Before publishing
 
-1. Confirm the official lab name, department, supervisor name, contact address, affiliations, and publication metadata.
-2. Replace the abstract CSS illustration with approved experimental or simulation images.
-3. Populate Publications, Members, News, and Contact. Obtain consent for portrait images/names.
-4. In GitHub repository Settings > Pages, choose **GitHub Actions** as build/deployment source.
-5. Put this entire directory into a GitHub repository (suggested name: `iwashita-lab`) and push to `main`.
-6. Workflow automatically sets `SITE_URL` and `SITE_BASE` based on the repository for a GitHub project page. For a custom domain or `username.github.io` root repository, adjust the build environment accordingly.
-7. Check responsiveness, accessibility, outgoing links, and university branding rules before announcing the website.
+1. In GitHub repository Settings > Pages, choose **GitHub Actions** as the build/deployment source.
+2. Confirm responsiveness, accessibility, outgoing links, image reuse permissions, and university branding rules.
+3. Commit and push reviewed changes to `main`.
+4. Run the `Deploy Astro to GitHub Pages` workflow manually from the Actions tab. Pushes do not trigger deployment automatically.
+
+The workflow sets `SITE_URL` and `SITE_BASE` from the repository. The defaults in `astro.config.mjs` point to the same production URL. For a custom domain or a root `username.github.io` repository, update both the defaults and workflow environment variables.
+
+`npm run build` runs a prebuild cleanup that removes Finder `.DS_Store` metadata from `public` before Astro copies static assets. It does not remove research images or other site assets.
 
 ## Where to edit
 
@@ -25,5 +31,6 @@ Open the URL shown in Terminal (usually http://localhost:4321/iwashita-lab/). Th
 - `src/pages/[lang]/index.astro`: homepage.
 - `src/pages/[lang]/[page].astro`: remaining sections.
 - `src/styles/global.css`: visual styles.
-
-**Draft status:** All research text is provisional; no publication, member, or contact details have been invented.
+- `src/data/seo.js`: page-specific meta descriptions and sitemap route definitions.
+- `src/layouts/Base.astro`: canonical URLs, language alternates, and Open Graph metadata.
+- `.github/workflows/deploy.yml`: manual GitHub Pages deployment workflow.

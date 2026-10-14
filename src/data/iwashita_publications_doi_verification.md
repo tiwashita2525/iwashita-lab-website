@@ -1,5 +1,8 @@
 # DOI照合レポート
 
+> **記録について**
+> この文書はDOI補完作業を実施した時点の調査記録です。その後の書誌情報修正や追加調査は、この文書に反映されていない場合があります。現在サイトで使用している書誌情報は、`src/data/iwashita_publications_google_scholar.json`、`src/data/iwashita_japanese_publications.json`、`src/data/publications.js`を確認してください。
+
 - 調査日: 2026-10-14
 - 出典: Crossref REST API
 - 対象: Publicationsページに統合される50件

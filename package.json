@@ -1,1 +1,1 @@
-{"name":"iwashita-lab-website","version":"0.1.0","private":true,"type":"module","scripts":{"dev":"astro dev","build":"astro build","preview":"astro preview"},"dependencies":{"astro":"^5.0.0"}}
+{"name":"iwashita-lab-website","version":"0.1.0","private":true,"type":"module","scripts":{"dev":"astro dev","prebuild":"node scripts/clean-public-metadata.mjs","build":"astro build","preview":"astro preview"},"dependencies":{"astro":"^5.0.0"}}

@@ -15,16 +15,16 @@ const c=copy[lang];
 const contentKey=page==='publications'?'pubs':page;
 const title=c[contentKey+'Title'];
 const lead=c[contentKey+'Lead'];
-const pageLead=page==='publications'
-  ? lang==='ja'
-    ? 'Google Scholarから取得した業績を、出版年の新しい順に掲載しています。'
-    : 'Publications sourced from Google Scholar, listed in reverse chronological order.'
+const pageLead=page==='research'
+  ? c.researchPageLead
+  : page==='publications'
+  ? ''
   : page==='members'
     ? memberPageCopy[lang].lead
   : page==='contact'
     ? contactPageCopy[lang].lead
   : lead;
 ---
-<Base lang={lang} page={page}><section class="subhero"><div class="container"><div class="label">IWASHITA LABORATORY / {page.toUpperCase()}</div><h1>{title}</h1><p>{pageLead}</p></div></section><section class="container section">
+<Base lang={lang} page={page}><section class="subhero"><div class="container"><div class="label">TI Lab / {page.toUpperCase()}</div><h1>{title}</h1>{pageLead && <p>{pageLead}</p>}</div></section><section class="container section">
 {page==='research' ? <><ResearchDetailGrid lang={lang} items={c.researchDetails}/><SelectedPublications lang={lang}/></> : page==='publications' ? <PublicationsList lang={lang}/> : page==='members' ? <MembersList lang={lang}/> : page==='news' ? <NewsList lang={lang}/> : page==='contact' ? <ContactDetails lang={lang}/> : <div class="pending"><span class="pending-dash"/><h2>{c.placeholder}</h2><p>{lead}</p></div>}
 </section></Base>

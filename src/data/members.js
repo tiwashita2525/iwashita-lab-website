@@ -38,14 +38,20 @@ export const memberDirectory = {
       {
         id: 'b4-01',
         grade: {ja: 'B4', en: 'B4'},
-        initials: null,
-        researchTopic: {ja: null, en: null},
+        initials: 'S. O.',
+        researchTopic: {
+          ja: '荷電コロイド分散系の粘度に関する研究',
+          en: 'Viscosity of Charged Colloidal Dispersions',
+        },
       },
       {
         id: 'b4-02',
         grade: {ja: 'B4', en: 'B4'},
-        initials: null,
-        researchTopic: {ja: null, en: null},
+        initials: 'T. T.',
+        researchTopic: {
+          ja: '流れるコロイド結晶のレオロジーに関する研究',
+          en: 'Rheology of Flowing Colloidal Crystals',
+        },
       },
     ],
   },
@@ -59,7 +65,7 @@ export const memberDirectory = {
 
 export const memberPageCopy = {
   ja: {
-    lead: '2026年度の研究室メンバーを、本人の掲載同意とプライバシーに配慮して紹介します。',
+    lead: '',
     principalInvestigator: 'Principal Investigator',
     undergraduateStudents: 'Undergraduate Students',
     graduateStudents: 'Graduate Students',
@@ -68,12 +74,11 @@ export const memberPageCopy = {
     initialsPending: 'イニシャル未登録',
     researchTopic: '研究テーマ',
     topicPending: '未登録',
-    graduateEmpty: '現在、掲載登録されている大学院生はいません。',
-    graduatePolicy: 'M1・M2・博士課程の学生は、本人の同意を得た場合にフルネームと研究テーマを掲載します。',
+    graduateEmpty: '大学院生は随時募集中です。',
     doctoral: '博士課程',
   },
   en: {
-    lead: 'Meet the laboratory members for the 2026 academic year, listed with attention to consent and privacy.',
+    lead: '',
     principalInvestigator: 'Principal Investigator',
     undergraduateStudents: 'Undergraduate Students',
     graduateStudents: 'Graduate Students',
@@ -82,8 +87,7 @@ export const memberPageCopy = {
     initialsPending: 'Initials not registered',
     researchTopic: 'Research Topic',
     topicPending: 'Not registered',
-    graduateEmpty: 'No graduate students are currently registered for publication.',
-    graduatePolicy: 'Full names and research topics for M1, M2, and doctoral students are published only with their consent.',
+    graduateEmpty: 'Graduate students are welcome to join our lab.',
     doctoral: 'Doctoral',
   },
 };

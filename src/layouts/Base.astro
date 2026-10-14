@@ -1,13 +1,22 @@
 ---
 import '../styles/global.css';
 import {copy, pages} from '../data/content.js';
+import {seoDescriptions} from '../data/seo.js';
 const {lang='ja', page='home'} = Astro.props;
 const c = copy[lang];
 const base=import.meta.env.BASE_URL;
 const url=(l,p)=>`${base}${l}/${p==='home'?'':p+'/'} ` .trim();
 const other=lang==='ja'?'en':'ja';
-const name={home:'Iwashita Laboratory',research:c.researchTitle,publications:c.pubsTitle,members:c.membersTitle,news:c.newsTitle,contact:c.contactTitle}[page];
+const name={home:'TI Lab',research:c.researchTitle,publications:c.pubsTitle,members:c.membersTitle,news:c.newsTitle,contact:c.contactTitle}[page];
+const title=page==='home' ? 'TI Lab | Oita University' : `${name} | TI Lab | Oita University`;
+const description=seoDescriptions[lang][page];
+const canonicalUrl=new URL(url(lang,page),Astro.site).toString();
+const japaneseUrl=new URL(url('ja',page),Astro.site).toString();
+const englishUrl=new URL(url('en',page),Astro.site).toString();
+const defaultUrl=new URL(base,Astro.site).toString();
+const ogLocale=lang==='ja'?'ja_JP':'en_US';
+const alternateOgLocale=lang==='ja'?'en_US':'ja_JP';
 ---
-<!doctype html><html lang={lang}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={c.subtitle}/><meta name="theme-color" content="#0a1724"/><title>{name} | Oita University</title><link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml"/></head>
-<body><header class="header"><div class="container nav"><a href={url(lang,'home')} class="brand"><span class="brand-symbol">I<span>.</span></span><span class="brand-name">IWASHITA <small>LABORATORY</small></span></a><nav aria-label="Main navigation">{pages.map((p,i)=><a class:list={[{active:p===page}]} href={url(lang,p)}>{c.nav[i]}</a>)}</nav><a class="language" href={url(other,page)} aria-label="Switch language">{c.langLabel} <span>↗</span></a></div></header>
-<main><slot/></main><footer><div class="container footer-inner"><strong>{c.footer}</strong><p>{c.notice}</p><small>© {new Date().getFullYear()} Iwashita Laboratory</small></div></footer></body></html>
+<!doctype html><html lang={lang}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><meta name="application-name" content="TI Lab"/><meta property="og:site_name" content="TI Lab"/><meta property="og:type" content="website"/><meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:url" content={canonicalUrl}/><meta property="og:locale" content={ogLocale}/><meta property="og:locale:alternate" content={alternateOgLocale}/><meta name="theme-color" content="#0a1724"/><title>{title}</title><link rel="canonical" href={canonicalUrl}/><link rel="alternate" hreflang="ja" href={japaneseUrl}/><link rel="alternate" hreflang="en" href={englishUrl}/><link rel="alternate" hreflang="x-default" href={defaultUrl}/><link rel="icon" href={`${base}favicon.svg`} type="image/svg+xml"/></head>
+<body><header class="header"><div class="container nav"><a href={url(lang,'home')} class="brand"><span class="brand-symbol">T<span>I</span></span><span class="brand-name">TI Lab <small>DYNAMIC APERIODIC MATTER</small></span></a><nav aria-label="Main navigation">{pages.map((p,i)=><a class:list={[{active:p===page}]} href={url(lang,p)}>{c.nav[i]}</a>)}</nav><a class="language" href={url(other,page)} aria-label="Switch language">{c.langLabel} <span>↗</span></a></div></header>
+<main><slot/></main><footer><div class="container footer-inner"><strong>{c.footer}</strong><small>© {new Date().getFullYear()} TI Lab</small></div></footer></body></html>

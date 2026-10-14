@@ -25,6 +25,7 @@ export const PUBLICATION_TYPES = [
  * @property {number} year
  * @property {string[]=} authors
  * @property {string=} doi
+ * @property {string=} articleNumber
  */
 
 const publicationTypeAliases = {
@@ -32,6 +33,21 @@ const publicationTypeAliases = {
   'Reviews & Commentaries': 'review_commentary',
   'Books & Book Chapters': 'book_chapter',
   'Corrections & Others': 'correction_other',
+};
+
+const publicationVenueNames = {
+  'Nature communications': 'Nature Communications',
+  'Physical review letters': 'Physical Review Letters',
+  'Acta materialia': 'Acta Materialia',
+  'Science advances': 'Science Advances',
+};
+
+const japaneseVenueEnglishNames = {
+  'Journal of the Society of Materials Science, Japan（材料）': 'Journal of the Society of Materials Science, Japan',
+  'アンサンブル': 'Ensemble',
+  'サイバーメディアHPCジャーナル': 'High Performance Computer Journal',
+  '放射光': 'Journal of JSSRR',
+  '日本物理学会誌': 'Butsuri',
 };
 
 const japaneseRecords = japanesePublicationData.records.map(publication => ({
@@ -106,6 +122,21 @@ export const getPublicationTitle = (publication, interfaceLanguage) => {
   }
   return publication.titleEn || publication.title || publication.titleJa;
 };
+
+export const getPublicationVenue = (publication, interfaceLanguage) => {
+  const venue = [publication.venue, publication.journal, publication.booktitle]
+    .find(value => typeof value === 'string' && value.trim())
+    ?.trim() || '';
+  const normalizedVenue = publicationVenueNames[venue] || venue;
+  if (interfaceLanguage === 'en' && publication.language === 'ja') {
+    return japaneseVenueEnglishNames[normalizedVenue] || normalizedVenue;
+  }
+  return normalizedVenue;
+};
+
+export const formatPublicationPages = pages => typeof pages === 'string'
+  ? pages.trim().replaceAll('--', '–')
+  : '';
 
 const decodeBibtexName = value => value
   .replaceAll("{\\'a}", 'á')

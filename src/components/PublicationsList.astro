@@ -1,5 +1,5 @@
 ---
-import {PUBLICATION_TYPES, formatPublicationAuthor, getPublicationTitle, publications as publicationData} from '../data/publications.js';
+import {PUBLICATION_TYPES, formatPublicationAuthor, formatPublicationPages, getPublicationTitle, getPublicationVenue, publications as publicationData} from '../data/publications.js';
 
 const {lang='ja'} = Astro.props;
 const text = lang === 'ja' ? {
@@ -27,12 +27,14 @@ const normalized = publicationData.map((publication, sourceIndex) => {
   const item = publication;
   const title = getPublicationTitle(item, lang);
   const kind = item.publicationType;
-  const venue = getText(item, 'venue') || getText(item, 'journal') || getText(item, 'booktitle');
+  const venue = getPublicationVenue(item, lang);
+  const pages = formatPublicationPages(item.pages);
   const details = [
     venue,
     getText(item, 'volume') && `vol. ${getText(item, 'volume')}`,
     (getText(item, 'number') || getText(item, 'issue')) && `no. ${getText(item, 'number') || getText(item, 'issue')}`,
-    getText(item, 'pages') && `pp. ${getText(item, 'pages')}`,
+    pages && `pp. ${pages}`,
+    getText(item, 'articleNumber') && `${lang === 'ja' ? '記事番号' : 'Article no.'} ${getText(item, 'articleNumber')}`,
   ].filter(Boolean).join(', ');
   const doi = getText(item, 'doi');
 

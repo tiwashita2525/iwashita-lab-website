@@ -66,7 +66,6 @@ const gradeLabel = grade => grade === 'Doctoral' ? text.doctoral : grade;
         {graduate.allowedGrades.map(grade => <span>{gradeLabel(grade)}</span>)}
       </div>
       <h3>{text.graduateEmpty}</h3>
-      <p>{text.graduatePolicy}</p>
     </div>}
   </section>
 </div>
@@ -94,7 +93,6 @@ const gradeLabel = grade => grade === 'Doctoral' ? text.doctoral : grade;
   .graduate-grades{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
   .graduate-grades span{padding:6px 10px;border:1px solid #9bcbcd;color:#087c81;background:#fff;font-size:10px;font-weight:700;letter-spacing:.08em}
   .graduate-empty h3{margin:0;color:#182833;font-size:18px;font-weight:600;line-height:1.6}
-  .graduate-empty p{max-width:720px;margin:10px 0 0;color:#607681;font-size:13px;line-height:1.9}
   @media(max-width:800px){
     .members-list{gap:54px}
     .member-section{grid-template-columns:1fr;gap:21px}
