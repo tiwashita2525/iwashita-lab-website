@@ -1,0 +1,41 @@
+---
+import {researchImageCopy, researchImageGroups} from '../data/researchImages.js';
+
+const {lang = 'ja', items = []} = Astro.props;
+const base = import.meta.env.BASE_URL;
+const imageText = researchImageCopy[lang];
+---
+
+<div class="research-grid">
+  {items.map(([no, title, desc], areaIndex) => {
+    const group = researchImageGroups[areaIndex];
+    const image = group.images[group.representative];
+    return <a class="research-card research-home-card" href={`${base}${lang}/research/`}>
+      <figure class="research-card-image">
+        <img
+          src={`${base}${image.src}`}
+          width={image.width}
+          height={image.height}
+          alt={imageText.alt(title, 1)}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+      <span class="number">{no}</span>
+      <h3>{title}</h3>
+      <p>{desc}</p>
+    </a>;
+  })}
+</div>
+
+<style>
+  .research-home-card{display:flex;flex-direction:column;overflow:visible}
+  .research-card-image{display:flex;align-items:center;justify-content:center;width:auto;height:320px;margin:-27px -27px 24px;overflow:visible;background:#e7eff0;border-bottom:1px solid #dce8e9}
+  .research-card-image img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+  @media(max-width:1030px){
+    .research-card-image{height:300px}
+  }
+  @media(max-width:700px){
+    .research-card-image{height:min(86vw,360px)}
+  }
+</style>

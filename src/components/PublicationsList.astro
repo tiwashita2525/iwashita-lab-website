@@ -1,0 +1,165 @@
+---
+import {PUBLICATION_TYPES, formatPublicationAuthor, getPublicationTitle, publications as publicationData} from '../data/publications.js';
+
+const {lang='ja'} = Astro.props;
+const text = lang === 'ja' ? {
+  typesLabel: '業績種別',
+  all: 'すべて',
+  types: {
+    original_article: '原著論文',
+    review_commentary: '総説・解説',
+    book_chapter: '書籍・書籍の章',
+    correction_other: '訂正・その他',
+  },
+} : {
+  typesLabel: 'Publication types',
+  all: 'All',
+  types: {
+    original_article: 'Original Articles',
+    review_commentary: 'Reviews & Commentaries',
+    book_chapter: 'Books & Book Chapters',
+    correction_other: 'Corrections & Others',
+  },
+};
+
+const getText = (item, key) => typeof item[key] === 'string' ? item[key].trim() : '';
+const normalized = publicationData.map((publication, sourceIndex) => {
+  const item = publication;
+  const title = getPublicationTitle(item, lang);
+  const kind = item.publicationType;
+  const venue = getText(item, 'venue') || getText(item, 'journal') || getText(item, 'booktitle');
+  const details = [
+    venue,
+    getText(item, 'volume') && `vol. ${getText(item, 'volume')}`,
+    (getText(item, 'number') || getText(item, 'issue')) && `no. ${getText(item, 'number') || getText(item, 'issue')}`,
+    getText(item, 'pages') && `pp. ${getText(item, 'pages')}`,
+  ].filter(Boolean).join(', ');
+  const doi = getText(item, 'doi');
+
+  return {
+    id: getText(item, 'id'),
+    title,
+    year: typeof item.year === 'number' ? item.year : 0,
+    authors: Array.isArray(item.authors) ? item.authors.map(formatPublicationAuthor) : [],
+    details,
+    doi,
+    kind,
+    showJapaneseNote: lang === 'en' && item.language === 'ja',
+    sourceIndex,
+  };
+});
+
+const publications = normalized
+  .sort((a, b) => b.year - a.year || a.sourceIndex - b.sourceIndex)
+  .map((publication, index) => ({...publication, number: index + 1}));
+const yearGroups = [...new Set(publications.map(({year}) => year))]
+  .map(year => ({year, publications: publications.filter(publication => publication.year === year)}));
+const totalLabel = lang === 'ja' ? `全${publications.length}件` : `${publications.length} publications`;
+const countLabel = count => lang === 'ja' ? `${count}件` : `${count} items`;
+---
+
+<div class="publications-list" data-publications-list data-language={lang}>
+  <div class="publications-summary">
+    <strong data-publication-total>{totalLabel}</strong>
+    <div class="publications-legend" aria-label={text.typesLabel}>
+      <button class="publication-type publication-filter" type="button" data-publication-filter="all" aria-pressed="true">{text.all}</button>
+      {PUBLICATION_TYPES.map(kind => <button class={`publication-type publication-filter type-${kind}`} type="button" data-publication-filter={kind} aria-pressed="false">{text.types[kind]}</button>)}
+    </div>
+  </div>
+
+  {yearGroups.map(group => <section class="publication-year" data-publication-year aria-labelledby={`year-${group.year}`}>
+    <header class="publication-year-head">
+      <h2 id={`year-${group.year}`}>{group.year}</h2>
+      <span data-publication-year-count>{countLabel(group.publications.length)}</span>
+    </header>
+    <ol>
+      {group.publications.map(publication => <li data-publication-item data-publication-type={publication.kind}>
+        <div class="publication-meta">
+          <span class={`publication-type type-${publication.kind}`}>{text.types[publication.kind]}</span>
+          <span class="publication-number">{String(publication.number).padStart(2, '0')}</span>
+        </div>
+        <h3>{publication.title}{publication.showJapaneseNote && <span class="publication-language"> (in Japanese)</span>}</h3>
+        {publication.authors.length > 0 && <p class="publication-authors">{publication.authors.map((author, index) => <span>{author.isIwashita ? <strong class="author-iwashita">{author.label}</strong> : <span>{author.label}</span>}{index < publication.authors.length - 1 && ', '}</span>)}</p>}
+        {publication.details && <p class="publication-details">{publication.details}</p>}
+        {publication.doi && <a class="publication-doi" href={`https://doi.org/${publication.doi}`} rel="noreferrer">DOI ↗</a>}
+      </li>)}
+    </ol>
+  </section>)}
+</div>
+
+<style>
+  .publications-list{display:grid;gap:54px}
+  .publications-summary{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-bottom:24px;border-bottom:1px solid #d9e4e7}
+  .publications-summary strong{font-size:14px;letter-spacing:.08em;color:#123746}
+  .publications-legend{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+  .publication-type{display:inline-flex;align-items:center;width:max-content;padding:6px 9px;border:1px solid #b9d9db;color:#087c81;background:#f3f8f8;font-size:10px;font-weight:700;letter-spacing:.08em;line-height:1}
+  .publication-filter{appearance:none;font-family:inherit;cursor:pointer}
+  .publication-filter[aria-pressed="true"]{border-color:#0a3644;color:#fff;background:#0a3644}
+  .type-review_commentary{border-color:#a7cec8;color:#316e68;background:#f1f8f6}
+  .type-book_chapter{border-color:#bfcddd;color:#385f78;background:#f3f6f9}
+  .type-correction_other{border-color:#d5c7b7;color:#795b39;background:#faf7f3}
+  .publication-year{display:grid;grid-template-columns:130px minmax(0,1fr);gap:38px}
+  .publication-year-head{padding-top:3px}
+  .publication-year-head h2{margin:0;color:#0a9fa3;font-size:32px;line-height:1}
+  .publication-year-head span{display:block;margin-top:10px;color:#758893;font-size:11px;letter-spacing:.08em}
+  ol{list-style:none;margin:0;padding:0;border-top:1px solid #d9e4e7}
+  li{position:relative;padding:27px 0 29px;border-bottom:1px solid #d9e4e7}
+  .publication-meta{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:13px}
+  .publication-number{color:#9babb2;font-size:11px;letter-spacing:.12em}
+  h3{max-width:900px;margin:0;color:#182833;font-size:18px;font-weight:600;line-height:1.55;letter-spacing:-.015em}
+  .publication-language{color:#667d88;font-size:.78em;font-weight:500;letter-spacing:0}
+  p{margin:9px 0 0;max-width:950px}
+  .publication-authors{color:#4f6571;font-size:13px;line-height:1.75}
+  .publication-authors strong.author-iwashita{color:#182833;font-weight:700}
+  .publication-details{color:#74858d;font-size:12px;line-height:1.7;font-style:italic}
+  .publication-doi{display:inline-block;margin-top:13px;color:#087c81;font-size:12px;font-weight:700}
+  [hidden]{display:none!important}
+  @media(max-width:700px){
+    .publications-list{gap:42px}
+    .publications-summary{align-items:flex-start;flex-direction:column}
+    .publications-legend{justify-content:flex-start}
+    .publication-year{grid-template-columns:1fr;gap:16px}
+    .publication-year-head{display:flex;align-items:baseline;gap:12px}
+    .publication-year-head h2{font-size:28px}
+    .publication-year-head span{margin-top:0}
+    li{padding:23px 0 25px}
+    h3{font-size:16px}
+  }
+</style>
+
+<script>
+  document.querySelectorAll('[data-publications-list]').forEach(root => {
+    const language = root.getAttribute('data-language');
+    const buttons = [...root.querySelectorAll('[data-publication-filter]')];
+    const yearSections = [...root.querySelectorAll('[data-publication-year]')];
+    const total = root.querySelector('[data-publication-total]');
+
+    const countLabel = count => language === 'ja' ? `全${count}件` : `${count} publications`;
+    const yearCountLabel = count => language === 'ja' ? `${count}件` : `${count} items`;
+
+    const applyFilter = filter => {
+      buttons.forEach(button => button.setAttribute('aria-pressed', String(button.getAttribute('data-publication-filter') === filter)));
+      let visibleTotal = 0;
+
+      yearSections.forEach(section => {
+        const items = [...section.querySelectorAll('[data-publication-item]')];
+        let visibleInYear = 0;
+
+        items.forEach(item => {
+          const visible = filter === 'all' || item.getAttribute('data-publication-type') === filter;
+          item.hidden = !visible;
+          if (visible) visibleInYear += 1;
+        });
+
+        section.hidden = visibleInYear === 0;
+        const yearCount = section.querySelector('[data-publication-year-count]');
+        if (yearCount) yearCount.textContent = yearCountLabel(visibleInYear);
+        visibleTotal += visibleInYear;
+      });
+
+      if (total) total.textContent = countLabel(visibleTotal);
+    };
+
+    buttons.forEach(button => button.addEventListener('click', () => applyFilter(button.getAttribute('data-publication-filter') || 'all')));
+  });
+</script>

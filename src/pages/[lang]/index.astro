@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import NewsList from '../../components/NewsList.astro';
+import ResearchHomeCards from '../../components/ResearchHomeCards.astro';
+import {copy} from '../../data/content.js';
+import {newsPageCopy} from '../../data/news.js';
+export function getStaticPaths(){return ['ja','en'].map(lang=>({params:{lang}}))}
+const {lang}=Astro.params; const c=copy[lang]; const newsText=newsPageCopy[lang]; const base=import.meta.env.BASE_URL;
+---
+<Base lang={lang} page="home"><section class="hero"><div class="container hero-grid"><div class="hero-copy"><div class="label">{c.eyebrow}</div><h1>{c.title.split('\n').map((line)=><span>{line}</span>)}</h1><p>{c.subtitle}</p><a class="cta" href={`${base}${lang}/research/`}>{c.discover} <span>↗</span></a></div><div class="hero-art" role="img" aria-label="Abstract representation of particle dynamics"><div class="orb orb-a"/><div class="orb orb-b"/><div class="orb orb-c"/><div class="orb orb-d"/><div class="orbit"/><div class="art-caption">MOLECULAR DYNAMICS / STRUCTURE</div></div></div><div class="container hero-bottom"><span>01 / 03</span><span>{c.mark}</span><span>↓ SCROLL TO EXPLORE</span></div></section>
+<section class="section container intro"><div class="section-kicker">01 — {c.latest}</div><div><h2>{c.introTitle}</h2><p>{c.intro}</p></div></section>
+<section class="section research-section"><div class="container"><div class="section-head"><div><div class="section-kicker">02 — RESEARCH</div><h2>{c.researchTitle}</h2><p>{c.researchLead}</p></div><a class="textlink" href={`${base}${lang}/research/`}>{c.more} ↗</a></div><ResearchHomeCards lang={lang} items={c.research}/></div></section>
+<section class="section container"><div class="section-head"><div><div class="section-kicker">03 — NEWS</div><h2>{newsText.latestTitle}</h2><p>{newsText.latestLead}</p></div><a class="textlink" href={`${base}${lang}/news/`}>{newsText.viewAll} ↗</a></div><NewsList lang={lang} limit={3} compact={true}/></section>
+<section class="section container closing"><div><div class="section-kicker">04 — PUBLICATIONS</div><h2>{c.pubsTitle}</h2><p>{c.pubsLead}</p></div><a class="cta dark" href={`${base}${lang}/publications/`}>{c.more} ↗</a></section>
+</Base>

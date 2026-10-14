@@ -1,0 +1,101 @@
+---
+import {contactDirectory, contactPageCopy} from '../data/contact.js';
+
+const {lang = 'ja'} = Astro.props;
+const text = contactPageCopy[lang];
+const localize = value => value?.[lang] || '';
+const details = [
+  {label: text.laboratoryName, value: localize(contactDirectory.laboratoryName)},
+  {label: text.affiliation, value: localize(contactDirectory.affiliation)},
+  {label: text.location, value: localize(contactDirectory.location)},
+  {label: text.email, value: contactDirectory.email.display, note: localize(contactDirectory.email.note)},
+];
+---
+
+<div class="contact-details">
+  <section class="contact-overview" aria-labelledby="contact-overview-title">
+    <div class="contact-identity">
+      <span class="contact-kicker">IWASHITA LABORATORY</span>
+      <h2 id="contact-overview-title">{localize(contactDirectory.laboratoryName)}</h2>
+      <p>{localize(contactDirectory.affiliation)}</p>
+      <div class="representative">
+        <span>{text.representative}</span>
+        <strong>{localize(contactDirectory.representative)}</strong>
+      </div>
+    </div>
+
+    <div class="contact-information">
+      <h2>{text.overview}</h2>
+      <dl>
+        {details.map(detail => <div>
+          <dt>{detail.label}</dt>
+          <dd>
+            <span>{detail.value}</span>
+            {detail.note && <small class="email-note">{detail.note}</small>}
+          </dd>
+        </div>)}
+      </dl>
+    </div>
+  </section>
+
+  <section class="profile-section" aria-labelledby="researcher-profiles-title">
+    <header>
+      <span class="section-number">02</span>
+      <div>
+        <h2 id="researcher-profiles-title">{text.profiles}</h2>
+        <p>{text.profilesLead}</p>
+      </div>
+    </header>
+    <div class="profile-links">
+      {contactDirectory.profiles.map(profile => <a href={profile.url} target="_blank" rel="noreferrer">
+        <span>{profile.label}</span>
+        <small>{text.externalLink}</small>
+        <strong aria-hidden="true">↗</strong>
+      </a>)}
+    </div>
+  </section>
+</div>
+
+<style>
+  .contact-details{display:grid;gap:76px}
+  .contact-overview{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);border:1px solid #d9e4e7}
+  .contact-identity{min-height:370px;display:flex;flex-direction:column;padding:42px;background:#0a2331;color:#fff;border-top:4px solid #19a7ad}
+  .contact-kicker{color:#70c8c9;font-size:10px;font-weight:700;letter-spacing:.18em}
+  .contact-identity h2{max-width:380px;margin:32px 0 10px;font-size:32px;font-weight:600;line-height:1.35;letter-spacing:-.025em}
+  .contact-identity>p{margin:0;color:#b5ccd3;font-size:14px}
+  .representative{margin-top:auto;padding-top:28px;border-top:1px solid #ffffff24}
+  .representative span{display:block;color:#83a4b2;font-size:10px;font-weight:700;letter-spacing:.12em}
+  .representative strong{display:block;margin-top:10px;font-size:18px;font-weight:600}
+  .contact-information{padding:42px;background:#fff}
+  .contact-information h2{margin:0 0 27px;color:#182833;font-size:20px;line-height:1.5}
+  .contact-information dl{margin:0}
+  .contact-information dl div{display:grid;grid-template-columns:145px minmax(0,1fr);gap:20px;padding:19px 0;border-top:1px solid #d9e4e7}
+  .contact-information dl div:last-child{border-bottom:1px solid #d9e4e7}
+  .contact-information dt{color:#74858d;font-size:11px;font-weight:700;letter-spacing:.08em}
+  .contact-information dd{margin:0;color:#182833;font-size:14px;line-height:1.7}
+  .email-note{display:block;margin-top:5px;color:#74858d;font-size:11px;line-height:1.7}
+  .profile-section{display:grid;grid-template-columns:250px minmax(0,1fr);gap:42px}
+  .profile-section header{display:flex;align-items:flex-start;gap:16px}
+  .section-number{padding-top:7px;color:#0a9fa3;font-size:11px;font-weight:700;letter-spacing:.12em}
+  .profile-section h2{margin:0;color:#182833;font-size:20px;line-height:1.5}
+  .profile-section header p{margin:10px 0 0;color:#607681;font-size:13px;line-height:1.9}
+  .profile-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .profile-links a{position:relative;min-height:170px;display:flex;flex-direction:column;padding:27px;background:#f1f5f6;border-top:3px solid #19a7ad;transition:background-color .2s ease,color .2s ease}
+  .profile-links a>span{color:#182833;font-size:20px;font-weight:600}
+  .profile-links small{margin-top:auto;color:#607681;font-size:11px;letter-spacing:.04em}
+  .profile-links strong{position:absolute;right:25px;bottom:22px;color:#087c81;font-size:20px}
+  .profile-links a:hover,.profile-links a:focus-visible{background:#e4f0f1;outline-color:#087c81}
+  @media(max-width:800px){
+    .contact-details{gap:56px}
+    .contact-overview,.profile-section{grid-template-columns:1fr}
+    .contact-identity{min-height:320px}
+    .profile-section{gap:24px}
+  }
+  @media(max-width:560px){
+    .contact-identity,.contact-information{padding:27px}
+    .contact-identity h2{font-size:27px}
+    .contact-information dl div{grid-template-columns:1fr;gap:7px}
+    .profile-links{grid-template-columns:1fr}
+    .profile-links a{min-height:145px;padding:24px}
+  }
+</style>

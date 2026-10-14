@@ -1,0 +1,109 @@
+---
+import {memberDirectory, memberPageCopy} from '../data/members.js';
+
+const {lang = 'ja'} = Astro.props;
+const text = memberPageCopy[lang];
+const localize = value => value?.[lang] || '';
+const undergraduate = memberDirectory.undergraduateStudents;
+const graduate = memberDirectory.graduateStudents;
+const publishedGraduateMembers = graduate.members.filter(student => student.publicationConsent === true);
+const gradeLabel = grade => grade === 'Doctoral' ? text.doctoral : grade;
+---
+
+<div class="members-list">
+  <section class="member-section" aria-labelledby="principal-investigator-title">
+    <header class="member-section-head">
+      <span class="member-section-number">01</span>
+      <h2 id="principal-investigator-title">{text.principalInvestigator}</h2>
+    </header>
+    <article class="principal-card">
+      <div class="principal-mark" aria-hidden="true">TI</div>
+      <div>
+        <h3>{localize(memberDirectory.principalInvestigator.name)}</h3>
+        <p>{localize(memberDirectory.principalInvestigator.position)}</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="member-section" aria-labelledby="undergraduate-students-title">
+    <header class="member-section-head">
+      <span class="member-section-number">02</span>
+      <div>
+        <h2 id="undergraduate-students-title">{text.undergraduateStudents}</h2>
+        <p>{text.academicYear(memberDirectory.academicYear)} · {localize(undergraduate.grade)} · {text.people(undergraduate.members.length)}</p>
+      </div>
+    </header>
+    <div class="student-grid">
+      {undergraduate.members.map(student => <article class="student-card">
+        <div class="student-card-head">
+          <span class="student-grade">{localize(student.grade)}</span>
+        </div>
+        <h3>{student.initials || text.initialsPending}</h3>
+        <dl>
+          <dt>{text.researchTopic}</dt>
+          <dd>{localize(student.researchTopic) || text.topicPending}</dd>
+        </dl>
+      </article>)}
+    </div>
+  </section>
+
+  <section class="member-section" aria-labelledby="graduate-students-title">
+    <header class="member-section-head">
+      <span class="member-section-number">03</span>
+      <h2 id="graduate-students-title">{text.graduateStudents}</h2>
+    </header>
+    {publishedGraduateMembers.length > 0 ? <div class="student-grid">
+      {publishedGraduateMembers.map(student => <article class="student-card">
+        <div class="student-card-head"><span class="student-grade">{localize(student.grade)}</span></div>
+        <h3>{localize(student.fullName)}</h3>
+        <dl>
+          <dt>{text.researchTopic}</dt>
+          <dd>{localize(student.researchTopic) || text.topicPending}</dd>
+        </dl>
+      </article>)}
+    </div> : <div class="graduate-empty">
+      <div class="graduate-grades" aria-hidden="true">
+        {graduate.allowedGrades.map(grade => <span>{gradeLabel(grade)}</span>)}
+      </div>
+      <h3>{text.graduateEmpty}</h3>
+      <p>{text.graduatePolicy}</p>
+    </div>}
+  </section>
+</div>
+
+<style>
+  .members-list{display:grid;gap:72px}
+  .member-section{display:grid;grid-template-columns:250px minmax(0,1fr);gap:42px}
+  .member-section-head{display:flex;align-items:flex-start;gap:16px;padding-top:4px}
+  .member-section-number{color:#0a9fa3;font-size:11px;font-weight:700;letter-spacing:.12em;padding-top:7px}
+  .member-section-head h2{margin:0;color:#182833;font-size:20px;line-height:1.5}
+  .member-section-head p{margin:9px 0 0;color:#74858d;font-size:12px;line-height:1.7}
+  .principal-card{min-height:190px;display:flex;align-items:center;gap:30px;padding:34px;background:#0a2331;color:#fff;border-left:4px solid #19a7ad}
+  .principal-mark{width:92px;height:92px;display:grid;place-items:center;flex:0 0 auto;border:1px solid #5fc4c2;color:#75d4d2;font-size:24px;font-weight:700;letter-spacing:.08em}
+  .principal-card h3{margin:0;font-size:27px;font-weight:600;letter-spacing:-.02em}
+  .principal-card p{margin:11px 0 0;color:#b5ccd3;font-size:14px;line-height:1.8}
+  .student-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .student-card{min-height:210px;padding:27px;background:#f1f5f6;border-top:3px solid #19a7ad}
+  .student-card-head{display:flex;align-items:center;justify-content:space-between;gap:18px}
+  .student-grade{color:#087c81;font-size:11px;font-weight:700;letter-spacing:.12em}
+  .student-card h3{margin:25px 0 30px;color:#182833;font-size:20px;font-weight:600}
+  .student-card dl{margin:0;padding-top:18px;border-top:1px solid #d6e2e5}
+  .student-card dt{color:#74858d;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+  .student-card dd{margin:8px 0 0;color:#4f6571;font-size:13px;line-height:1.75}
+  .graduate-empty{padding:34px;background:#f1f5f6;border:1px solid #e1eaec}
+  .graduate-grades{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .graduate-grades span{padding:6px 10px;border:1px solid #9bcbcd;color:#087c81;background:#fff;font-size:10px;font-weight:700;letter-spacing:.08em}
+  .graduate-empty h3{margin:0;color:#182833;font-size:18px;font-weight:600;line-height:1.6}
+  .graduate-empty p{max-width:720px;margin:10px 0 0;color:#607681;font-size:13px;line-height:1.9}
+  @media(max-width:800px){
+    .members-list{gap:54px}
+    .member-section{grid-template-columns:1fr;gap:21px}
+    .student-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:520px){
+    .principal-card{align-items:flex-start;flex-direction:column;padding:27px}
+    .principal-mark{width:72px;height:72px;font-size:20px}
+    .principal-card h3{font-size:23px}
+    .student-card,.graduate-empty{padding:24px}
+  }
+</style>

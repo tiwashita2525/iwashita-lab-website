@@ -1,0 +1,63 @@
+---
+import {getSortedNews, newsCategoryLabels, newsPageCopy} from '../data/news.js';
+
+const {lang = 'ja', limit, compact = false} = Astro.props;
+const text = newsPageCopy[lang];
+const categories = newsCategoryLabels[lang];
+const sortedNews = getSortedNews();
+const items = typeof limit === 'number' ? sortedNews.slice(0, limit) : sortedNews;
+const formatDate = date => new Intl.DateTimeFormat(lang === 'ja' ? 'ja-JP' : 'en-US', {
+  year: 'numeric',
+  month: lang === 'ja' ? 'numeric' : 'short',
+  day: 'numeric',
+  timeZone: 'UTC',
+}).format(new Date(`${date}T00:00:00Z`));
+---
+
+<div class:list={['news-list', {'news-list-compact': compact}]}>
+  {items.length > 0 ? <ol>
+    {items.map(item => <li>
+      <article>
+        <div class="news-meta">
+          <time datetime={item.date}>{formatDate(item.date)}</time>
+          <span class={`news-category category-${item.category}`}>{categories[item.category]}</span>
+        </div>
+        <h2>{lang === 'ja' ? item.titleJa : item.titleEn}</h2>
+        <p>{lang === 'ja' ? item.bodyJa : item.bodyEn}</p>
+        {item.relatedUrl && <a href={item.relatedUrl} target="_blank" rel="noreferrer">{text.relatedLink} ↗</a>}
+      </article>
+    </li>)}
+  </ol> : <div class="news-empty">
+    <span aria-hidden="true">—</span>
+    <div>
+      <h2>{text.emptyTitle}</h2>
+      <p>{text.emptyBody}</p>
+    </div>
+  </div>}
+</div>
+
+<style>
+  .news-list ol{list-style:none;margin:0;padding:0;border-top:1px solid #d9e4e7}
+  .news-list li{padding:30px 0;border-bottom:1px solid #d9e4e7}
+  .news-list article{display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:34px}
+  .news-meta{grid-row:1 / span 3;display:flex;align-items:flex-start;flex-direction:column;gap:12px}
+  .news-meta time{color:#526a76;font-size:12px;font-weight:600;letter-spacing:.06em}
+  .news-category{display:inline-flex;width:max-content;padding:6px 9px;border:1px solid #b9d9db;color:#087c81;background:#f3f8f8;font-size:10px;font-weight:700;letter-spacing:.08em;line-height:1}
+  .category-conference{border-color:#bfcddd;color:#385f78;background:#f3f6f9}
+  .category-lab_news{border-color:#a7cec8;color:#316e68;background:#f1f8f6}
+  .category-other{border-color:#d5c7b7;color:#795b39;background:#faf7f3}
+  .news-list h2{margin:0;color:#182833;font-size:19px;font-weight:600;line-height:1.55}
+  .news-list article p{margin:10px 0 0;color:#607681;font-size:13px;line-height:1.9}
+  .news-list article>a{width:max-content;margin-top:14px;color:#087c81;font-size:12px;font-weight:700}
+  .news-empty{min-height:230px;display:flex;align-items:center;gap:27px;padding:42px;background:#f1f5f6;border-top:3px solid #19a7ad}
+  .news-empty>span{color:#0a9fa3;font-size:30px;font-weight:300}
+  .news-empty h2{margin:0;font-size:20px}
+  .news-empty p{margin:8px 0 0;color:#607681;font-size:13px;line-height:1.9}
+  .news-list-compact .news-empty{min-height:180px}
+  @media(max-width:700px){
+    .news-list article{grid-template-columns:1fr;row-gap:14px}
+    .news-meta{grid-row:auto;flex-direction:row;align-items:center}
+    .news-list h2{font-size:17px}
+    .news-empty{align-items:flex-start;padding:29px;min-height:190px}
+  }
+</style>
