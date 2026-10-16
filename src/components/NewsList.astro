@@ -27,7 +27,10 @@ const getDisplayDateTime = item => item.displayDateTime || item.date;
         <h2>{lang === 'ja' ? item.titleJa : item.titleEn}</h2>
         <p>{lang === 'ja' ? item.bodyJa : item.bodyEn}</p>
         {item.relatedUrl && <a href={item.relatedUrl} target="_blank" rel="noreferrer">{text.relatedLink} ↗</a>}
-        {item.additionalLinks?.map(link => <a href={link.url} target="_blank" rel="noreferrer">{link.label[lang]} ↗</a>)}
+        {item.additionalLinks?.map(link => <>
+          {link.description && <p class="news-link-description">{link.description[lang]}</p>}
+          <a href={link.url} target="_blank" rel="noreferrer">{link.label[lang]} ↗</a>
+        </>)}
       </article>
     </li>)}
   </ol> : <div class="news-empty">

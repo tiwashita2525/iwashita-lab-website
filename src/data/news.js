@@ -31,7 +31,11 @@ export const newsCategoryLabels = {
  *   bodyJa: string,
  *   bodyEn: string,
  *   relatedUrl: string | null,
- *   additionalLinks?: Array<{url: string, label: {ja: string, en: string}}>,
+ *   additionalLinks?: Array<{
+ *     url: string,
+ *     label: {ja: string, en: string},
+ *     description?: {ja: string, en: string},
+ *   }>,
  * }} NewsItem
  */
 
@@ -107,6 +111,10 @@ export const newsItems = [
         label: {
           ja: '大分大学プレスリリース（PDF）',
           en: 'Press Release (Oita University, Japanese PDF)',
+        },
+        description: {
+          ja: '本研究成果について、大分大学からプレスリリースが発表されました。',
+          en: 'Oita University has issued a press release highlighting this research.',
         },
       },
     ],
