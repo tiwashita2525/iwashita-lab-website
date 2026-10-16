@@ -31,6 +31,7 @@ export const newsCategoryLabels = {
  *   bodyJa: string,
  *   bodyEn: string,
  *   relatedUrl: string | null,
+ *   additionalLinks?: Array<{url: string, label: {ja: string, en: string}}>,
  * }} NewsItem
  */
 
@@ -100,6 +101,15 @@ export const newsItems = [
     bodyJa: '“Cooperative atomic motion during shear deformation in metallic glass”がNature Communicationsに掲載されました。',
     bodyEn: '“Cooperative atomic motion during shear deformation in metallic glass” was published in Nature Communications.',
     relatedUrl: 'https://doi.org/10.1038/s41467-026-68308-4',
+    additionalLinks: [
+      {
+        url: 'https://www.oita-u.ac.jp/000069581.pdf',
+        label: {
+          ja: '大分大学プレスリリース（PDF）',
+          en: 'Press Release (Oita University, Japanese PDF)',
+        },
+      },
+    ],
   },
 ];
 
