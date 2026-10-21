@@ -52,6 +52,7 @@ export const researchImageGroups = [
         caption: {ja: '応力–ひずみ曲線', en: 'Stress–strain curve'},
         credit: {
           source: 'Shiihara et al., Nature Communications 17, 1604 (2026).',
+          citation: 'Adapted from Shiihara et al., Nat. Commun. 17, 1604 (2026)',
           note: {
             ja: 'Fig. 1aから応力–ひずみ曲線部分を抜粋。',
             en: 'Cropped from Fig. 1a to show the stress–strain curve.',
