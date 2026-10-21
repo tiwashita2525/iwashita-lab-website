@@ -50,6 +50,16 @@ export const researchImageGroups = [
         width: 472,
         height: 478,
         caption: {ja: '応力–ひずみ曲線', en: 'Stress–strain curve'},
+        credit: {
+          source: 'Shiihara et al., Nature Communications 17, 1604 (2026).',
+          note: {
+            ja: 'Fig. 1aから応力–ひずみ曲線部分を抜粋。',
+            en: 'Cropped from Fig. 1a to show the stress–strain curve.',
+          },
+          doi: 'https://doi.org/10.1038/s41467-026-68308-4',
+          license: 'CC BY 4.0',
+          licenseUrl: 'https://creativecommons.org/licenses/by/4.0/',
+        },
       },
       {
         src: 'images/research/glasses/glass_schematic_structure.png',

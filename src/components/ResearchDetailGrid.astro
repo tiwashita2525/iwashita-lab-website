@@ -27,6 +27,16 @@ const imageText = researchImageCopy[lang];
             decoding="async"
           />
           <figcaption>{image.caption[lang]}</figcaption>
+          {image.credit && <div class="research-image-credit">
+            <p>Source: Adapted from {image.credit.source}</p>
+            <p>{lang === 'ja' ? '変更内容：' : 'Modification: '}{image.credit.note[lang]}</p>
+            <p>
+              <a href={image.credit.doi} target="_blank" rel="noopener noreferrer">DOI</a>
+              <span aria-hidden="true"> · </span>
+              <span>License: </span>
+              <a href={image.credit.licenseUrl} target="_blank" rel="noopener noreferrer">{image.credit.license}</a>
+            </p>
+          </div>}
         </figure>)}
       </div>
     </article>;
@@ -42,6 +52,11 @@ const imageText = researchImageCopy[lang];
   .research-gallery figure{margin:0;min-width:0;background:#edf3f4;border:1px solid #dce8e9}
   .research-gallery img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:contain;background:#f7f9f9}
   .research-gallery figcaption{padding:8px 10px;color:#607681;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .research-image-credit{padding:0 10px 9px;color:#71838b;font-size:9px;line-height:1.55}
+  .research-image-credit p{margin:0}
+  .research-image-credit p+p{margin-top:2px}
+  .research-image-credit a{color:#327a82;text-decoration:underline;text-underline-offset:2px}
+  .research-image-credit a:hover{color:#005e69}
   .research-gallery-wide{grid-column:1/-1}
   .research-gallery .research-gallery-wide img{aspect-ratio:auto;object-fit:contain}
   @media(min-width:1031px){
