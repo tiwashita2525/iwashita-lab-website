@@ -1,4 +1,4 @@
-export const NEWS_CATEGORIES = ['publication', 'conference', 'lab_news', 'research_visit', 'seminar', 'other'];
+export const NEWS_CATEGORIES = ['publication', 'conference', 'lab_news', 'research_visit', 'seminar', 'meeting', 'other'];
 
 export const newsCategoryLabels = {
   ja: {
@@ -7,6 +7,7 @@ export const newsCategoryLabels = {
     lab_news: 'Lab News',
     research_visit: 'Research Visit',
     seminar: 'Seminar',
+    meeting: 'Meeting',
     other: 'Other',
   },
   en: {
@@ -15,6 +16,7 @@ export const newsCategoryLabels = {
     lab_news: 'Lab News',
     research_visit: 'Research Visit',
     seminar: 'Seminar',
+    meeting: 'Meeting',
     other: 'Other',
   },
 };
@@ -25,7 +27,7 @@ export const newsCategoryLabels = {
  *   date: string,
  *   displayDate?: {ja: string, en: string},
  *   displayDateTime?: string,
- *   category: 'publication' | 'conference' | 'lab_news' | 'research_visit' | 'seminar' | 'other',
+ *   category: 'publication' | 'conference' | 'lab_news' | 'research_visit' | 'seminar' | 'meeting' | 'other',
  *   titleJa: string,
  *   titleEn: string,
  *   bodyJa: string,
@@ -41,6 +43,16 @@ export const newsCategoryLabels = {
 
 /** @type {NewsItem[]} */
 export const newsItems = [
+  {
+    id: 'crest-yuragi-area-meeting-2026',
+    date: '2026-11-19',
+    category: 'meeting',
+    titleJa: 'CREST「ゆらぎ」第2回領域会議にオンライン参加',
+    titleEn: 'Participated in the Second CREST “Yuragi” Area Meeting',
+    bodyJa: '2026年11月19日、CREST「ゆらぎ」の第2回領域会議にオンラインで参加しました。',
+    bodyEn: 'On November 19, 2026, we participated online in the second area meeting of the CREST “Yuragi” research area.',
+    relatedUrl: null,
+  },
   {
     id: 'toyota-technological-institute-visit-2026',
     date: '2026-10-09',
