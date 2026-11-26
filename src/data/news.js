@@ -1,4 +1,4 @@
-export const NEWS_CATEGORIES = ['publication', 'conference', 'lab_news', 'research_visit', 'seminar', 'meeting', 'other'];
+export const NEWS_CATEGORIES = ['publication', 'conference', 'lab_news', 'research_visit', 'seminar', 'meeting', 'experiment', 'other'];
 
 export const newsCategoryLabels = {
   ja: {
@@ -8,6 +8,7 @@ export const newsCategoryLabels = {
     research_visit: 'Research Visit',
     seminar: 'Seminar',
     meeting: 'Meeting',
+    experiment: 'Experiment',
     other: 'Other',
   },
   en: {
@@ -17,6 +18,7 @@ export const newsCategoryLabels = {
     research_visit: 'Research Visit',
     seminar: 'Seminar',
     meeting: 'Meeting',
+    experiment: 'Experiment',
     other: 'Other',
   },
 };
@@ -27,7 +29,7 @@ export const newsCategoryLabels = {
  *   date: string,
  *   displayDate?: {ja: string, en: string},
  *   displayDateTime?: string,
- *   category: 'publication' | 'conference' | 'lab_news' | 'research_visit' | 'seminar' | 'meeting' | 'other',
+ *   category: 'publication' | 'conference' | 'lab_news' | 'research_visit' | 'seminar' | 'meeting' | 'experiment' | 'other',
  *   titleJa: string,
  *   titleEn: string,
  *   bodyJa: string,
@@ -43,6 +45,16 @@ export const newsCategoryLabels = {
 
 /** @type {NewsItem[]} */
 export const newsItems = [
+  {
+    id: 'spring-8-inelastic-x-ray-scattering-2026',
+    date: '2026-11-26',
+    category: 'experiment',
+    titleJa: 'SPring-8で非弾性X線散乱実験を実施',
+    titleEn: 'Inelastic X-ray Scattering Experiments at SPring-8',
+    bodyJa: '2026年11月20日〜26日、SPring-8にて、UT、ORNL、FITの共同研究者と非弾性X線散乱実験を実施しました。',
+    bodyEn: 'From November 20 to 26, 2026, we conducted inelastic X-ray scattering experiments at SPring-8 in collaboration with researchers from UT, ORNL, and FIT.',
+    relatedUrl: null,
+  },
   {
     id: 'crest-yuragi-area-meeting-2026',
     date: '2026-11-19',
