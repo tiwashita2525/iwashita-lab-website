@@ -35,6 +35,7 @@ export const newsCategoryLabels = {
  *   bodyJa: string,
  *   bodyEn: string,
  *   relatedUrl: string | null,
+ *   presentations?: Array<{ja: string, en: string}>,
  *   additionalLinks?: Array<{
  *     url: string,
  *     label: {ja: string, en: string},
@@ -45,6 +46,26 @@ export const newsCategoryLabels = {
 
 /** @type {NewsItem[]} */
 export const newsItems = [
+  {
+    id: 'jps-kyushu-branch-meeting-2026',
+    date: '2026-11-28',
+    category: 'conference',
+    titleJa: '第132回日本物理学会九州支部例会で研究発表',
+    titleEn: 'Research Presentations at the 132nd JPS Kyushu Branch Meeting',
+    bodyJa: '2026年11月28日、久留米工業大学で開催された第132回日本物理学会九州支部例会において、荷電コロイドに関する2件の研究発表を行いました。',
+    bodyEn: 'On November 28, 2026, TI Lab presented two studies on charged colloidal systems at the 132nd Meeting of the Kyushu Branch of the Physical Society of Japan, held at Kurume Institute of Technology.',
+    relatedUrl: null,
+    presentations: [
+      {
+        ja: 'G-3「pH測定による荷電コロイド結晶の物理化学的特性：KOH溶液添加時の効果」',
+        en: 'G-3: Physicochemical Properties of Charged Colloidal Crystals Investigated by pH Measurements: Effects of KOH Solution Addition',
+      },
+      {
+        ja: 'G-10「大気平衡下における無塩系荷電コロイド水溶液の粘度のセルモデル解析」',
+        en: 'G-10: Cell-Model Analysis of the Viscosity of Salt-Free Charged Colloidal Aqueous Dispersions under Atmospheric Equilibrium',
+      },
+    ],
+  },
   {
     id: 'spring-8-inelastic-x-ray-scattering-2026',
     date: '2026-11-26',
@@ -158,6 +179,7 @@ export const newsPageCopy = {
     emptyTitle: 'ニュースはまだ登録されていません。',
     emptyBody: '確認済みのお知らせを、準備ができ次第掲載します。',
     relatedLink: '関連ページ',
+    presentationsLabel: '発表題目',
   },
   en: {
     latestTitle: 'Latest News',
@@ -166,5 +188,6 @@ export const newsPageCopy = {
     emptyTitle: 'No news has been posted yet.',
     emptyBody: 'Verified updates will be published here when available.',
     relatedLink: 'Related page',
+    presentationsLabel: 'Presentations',
   },
 };

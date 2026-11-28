@@ -26,6 +26,12 @@ const getDisplayDateTime = item => item.displayDateTime || item.date;
         </div>
         <h2>{lang === 'ja' ? item.titleJa : item.titleEn}</h2>
         <p>{lang === 'ja' ? item.bodyJa : item.bodyEn}</p>
+        {item.presentations && <div class="news-presentations">
+          <h3>{text.presentationsLabel}</h3>
+          <ul>
+            {item.presentations.map(presentation => <li>{presentation[lang]}</li>)}
+          </ul>
+        </div>}
         {item.relatedUrl && <a href={item.relatedUrl} target="_blank" rel="noreferrer">{text.relatedLink} ↗</a>}
         {item.additionalLinks?.map(link => <>
           {link.description && <p class="news-link-description">{link.description[lang]}</p>}
@@ -58,6 +64,11 @@ const getDisplayDateTime = item => item.displayDateTime || item.date;
   .category-other{border-color:#d5c7b7;color:#795b39;background:#faf7f3}
   .news-list h2{margin:0;color:#182833;font-size:19px;font-weight:600;line-height:1.55}
   .news-list article p{margin:10px 0 0;color:#607681;font-size:13px;line-height:1.9}
+  .news-presentations{margin-top:16px}
+  .news-presentations h3{margin:0;color:#526a76;font-size:12px;font-weight:700;letter-spacing:.04em}
+  .news-presentations ul{margin:8px 0 0;padding-left:20px}
+  .news-presentations li{padding:0;border:0;color:#607681;font-size:13px;line-height:1.8}
+  .news-presentations li+li{margin-top:5px}
   .news-list article>a{width:max-content;margin-top:14px;color:#087c81;font-size:12px;font-weight:700}
   .news-empty{min-height:230px;display:flex;align-items:center;gap:27px;padding:42px;background:#f1f5f6;border-top:3px solid #19a7ad}
   .news-empty>span{color:#0a9fa3;font-size:30px;font-weight:300}
